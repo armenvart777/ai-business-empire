@@ -1,0 +1,22 @@
+# Backend API Requirements
+
+# FastAPI и сервер
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# Pydantic для validation
+pydantic>=2.5.0
+
+# CORS
+starlette>=0.27.0
+
+# Async support
+aiofiles>=23.2.0
+
+# All agent dependencies
+-r ../agents/trend-scanner/requirements.txt
+-r ../agents/business-generator/requirements.txt
+-r ../agents/developer/requirements.txt
+-r ../agents/marketing/requirements.txt
+-r ../agents/sales/requirements.txt
