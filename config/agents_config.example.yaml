@@ -1,0 +1,254 @@
+# Конфигурация AI-агентов
+# Скопируйте этот файл в agents_config.yaml и настройте под себя
+
+# Общие настройки для всех агентов
+global:
+  # Логирование
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  log_to_file: true
+  log_dir: "./logs"
+
+  # Кэширование
+  cache_enabled: true
+  cache_backend: "redis"  # redis, memory, file
+  cache_ttl: 3600  # Время жизни кэша в секундах
+
+  # LLM настройки по умолчанию
+  default_llm_provider: "openai"  # openai, anthropic, local
+  default_model: "gpt-4o-mini"
+  max_retries: 3
+  timeout: 30
+
+  # Мониторинг
+  monitoring_enabled: true
+  metrics_endpoint: "http://localhost:9090"
+
+# Trend Scanner Agent
+trend-scanner:
+  enabled: true
+  schedule: "0 */6 * * *"  # Каждые 6 часов (cron format)
+
+  # LLM настройки
+  llm_model: "gpt-4o-mini"  # Дешёвая модель для анализа
+  temperature: 0.3
+  max_tokens: 500
+
+  # Источники данных
+  sources:
+    google_trends:
+      enabled: true
+      regions: ["US", "GB", "DE"]
+      timeframe: "now 7-d"
+
+    reddit:
+      enabled: true
+      subreddits:
+        - "startups"
+        - "SaaS"
+        - "entrepreneur"
+        - "SideProject"
+      limit_posts: 50
+      min_upvotes: 10
+
+    producthunt:
+      enabled: true
+      days_back: 7
+      min_upvotes: 50
+
+    hackernews:
+      enabled: true
+      min_score: 100
+
+  # Фильтрация
+  filters:
+    min_trend_score: 6.0  # 0-10
+    keywords_blacklist:
+      - "crypto"
+      - "NFT"
+      - "gambling"
+    keywords_whitelist:
+      - "SaaS"
+      - "AI"
+      - "automation"
+      - "productivity"
+
+  # Output
+  output_format: "json"
+  save_to_db: true
+  notify_on_high_score: true  # Уведомлять если score > 8
+
+# Business Generator Agent
+business-generator:
+  enabled: true
+  schedule: "0 0 * * *"  # Ежедневно в полночь
+
+  # LLM настройки
+  llm_model: "claude-sonnet-4-5"  # Более мощная модель
+  temperature: 0.7
+  max_tokens: 2000
+
+  # Генерация идей
+  ideas_per_trend: 3
+  focus_on_digital: true
+  target_mvp_time: 30  # Дней до MVP
+
+  # Анализ конкурентов
+  competitor_analysis:
+    enabled: true
+    max_competitors: 5
+    check_domains: true
+
+  # Оценка потенциала
+  scoring:
+    weights:
+      market_size: 0.3
+      competition: 0.2
+      technical_feasibility: 0.25
+      monetization: 0.25
+    min_score: 7.0  # Минимальный score для одобрения
+
+  # Output
+  auto_approve_high_score: false  # Автоматически одобрять score > 9
+  save_to_db: true
+
+# Developer Agent
+developer:
+  enabled: true
+
+  # LLM для генерации кода
+  code_generation:
+    primary_model: "claude-sonnet-4-5"
+    fallback_model: "gpt-4o"
+    temperature: 0.2  # Низкая для детерминизма
+    max_tokens: 8000
+
+  # Инструменты
+  tools:
+    cursor_ai: true
+    v0_dev: true
+    github_copilot: false
+
+  # Шаблоны
+  templates:
+    default_stack: "nextjs-fastapi"
+    ui_library: "shadcn"
+    database: "supabase"
+
+  # Тестирование
+  testing:
+    run_tests: true
+    min_coverage: 70  # %
+
+  # Деплой
+  deployment:
+    auto_deploy: false
+    platform: "vercel"  # vercel, railway, fly.io
+    environment: "staging"
+
+# Marketer Agent
+marketer:
+  enabled: true
+
+  # LLM настройки
+  llm_model: "gpt-4o-mini"  # Дешёвая модель для контента
+  temperature: 0.8  # Выше для креативности
+  max_tokens: 2000
+
+  # Генерация контента
+  content:
+    landing_page: true
+    blog_posts: true
+    blog_posts_per_week: 2
+    social_media: true
+    email_sequences: true
+
+  # SEO
+  seo:
+    keyword_research: true
+    meta_tags: true
+    sitemap: true
+    internal_linking: true
+
+  # Каналы
+  channels:
+    organic:
+      enabled: true
+      focus: ["seo", "content marketing"]
+
+    paid:
+      enabled: false  # На старте только органика
+      budget_per_campaign: 50  # USD
+      platforms: ["google-ads"]
+
+  # Аналитика
+  analytics:
+    track_conversions: true
+    ab_testing: true
+
+# Sales Agent
+sales:
+  enabled: true
+
+  # LLM настройки
+  llm_model: "gpt-4o-mini"
+  temperature: 0.5
+  max_tokens: 1000
+
+  # Воронка продаж
+  funnel:
+    stages:
+      - "awareness"
+      - "consideration"
+      - "decision"
+      - "purchase"
+
+  # Email automation
+  email:
+    provider: "sendgrid"  # sendgrid, mailgun, resend
+    sequences:
+      welcome: true
+      nurture: true
+      abandoned_cart: true
+
+  # Интеграции
+  integrations:
+    stripe: true
+    analytics: true
+    crm: false  # TODO: добавить позже
+
+# Мониторинг и алерты
+monitoring:
+  # Здоровье агентов
+  health_checks:
+    enabled: true
+    interval: 300  # Секунды
+
+  # Алерты
+  alerts:
+    email: "your-email@example.com"
+    slack_webhook: ""  # Опционально
+
+    conditions:
+      - type: "agent_failure"
+        threshold: 3  # failures
+
+      - type: "high_costs"
+        threshold: 100  # USD per day
+
+      - type: "low_quality"
+        threshold: 5.0  # score
+
+# Ограничения (cost control)
+limits:
+  # LLM usage
+  daily_llm_budget: 20  # USD
+  max_tokens_per_day: 1000000
+
+  # API rate limits
+  max_requests_per_minute: 60
+
+  # Агенты
+  max_concurrent_agents: 5
+
+# Окружение
+environment: "development"  # development, staging, production
