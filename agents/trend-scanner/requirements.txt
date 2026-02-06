@@ -1,0 +1,16 @@
+# Trend Scanner Agent Dependencies
+
+# Google Trends
+pytrends>=4.9.0
+
+# Reddit API
+praw>=7.7.0
+
+# HTTP клиент для Product Hunt
+aiohttp>=3.9.0
+
+# JSON и data processing
+python-dateutil>=2.8.0
+
+# Для работы с async
+asyncio>=3.4.3
