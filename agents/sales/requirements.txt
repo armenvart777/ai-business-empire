@@ -1,0 +1,21 @@
+# Sales Agent Dependencies
+
+# CRM APIs (опционально)
+# hubspot-api-client>=7.3.0  # HubSpot CRM
+# pipedrive-python-lib>=5.0.0  # Pipedrive CRM
+
+# HTTP клиент для API requests
+aiohttp>=3.9.0
+requests>=2.31.0
+
+# JSON и data processing
+python-dateutil>=2.8.0
+
+# Для работы с async
+asyncio>=3.4.3
+
+# Statistics для A/B testing
+# scipy>=1.11.0  # Для statistical significance testing
+
+# URL parsing и validation
+validators>=0.22.0

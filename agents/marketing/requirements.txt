@@ -1,0 +1,28 @@
+# Marketing Agent Dependencies
+
+# Email sending (опционально)
+# sendgrid>=6.10.0
+
+# Social media APIs (опционально)
+# tweepy>=4.14.0  # Twitter
+# python-linkedin>=4.1  # LinkedIn
+# praw>=7.7.0  # Reddit
+
+# Analytics
+# google-analytics-data>=0.17.0  # Google Analytics API
+
+# HTTP клиент для API requests
+aiohttp>=3.9.0
+requests>=2.31.0
+
+# JSON и data processing
+python-dateutil>=2.8.0
+
+# Для работы с async
+asyncio>=3.4.3
+
+# Markdown processing (для blog posts)
+markdown>=3.5.0
+
+# URL parsing и validation
+validators>=0.22.0
